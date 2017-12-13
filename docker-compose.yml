@@ -1,0 +1,49 @@
+version: '2'
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+     - /docker-volumes/mongo:/data/db
+
+  mysql:
+     container_name: mysql
+     image: mysql
+     environment:
+       TZ: America/Sao_Paulo
+       MYSQL_ROOT_PASSWORD: example
+     volumes:
+      - ~/docker-volumes/mysql:/var/lib/mysql
+
+  alpinephp:
+    container_name: alpinephp
+    image: josebispo/superuber
+    links:
+      - mysql:mysql
+    environment:
+      TZ: America/Sao_Paulo
+      MONGO_DB_HOST: mysql
+      MONGO_DB_PORT: 3306
+      MONGO_DB_DATABASE: database
+      MONGO_DB_USERNAME:
+      MONGO_DB_PASSWORD:
+    volumes:
+     -  ../..:/var/www/src
+    ports:
+      - "8180:80"
+
+   # Distributed in-memory cache
+  redis:
+    image: redis:4.0.6-alpine
+    read_only: true
+    volumes:
+     - redis:/data
+    user: redis
+
+volumes:
+  redis:
+  yarn:
+  data:
+    driver: "local"
