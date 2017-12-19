@@ -12,7 +12,7 @@ services:
 
   alpinephp:
     container_name: alpinephp
-    image: superviz/218
+    image: josebispo/superviz-218
     links:
       - mysql:mysql
     environment:
