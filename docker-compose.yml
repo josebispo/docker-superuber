@@ -6,11 +6,11 @@ services:
      image: mysql
      environment:
        TZ: America/Sao_Paulo
-       MYSQL_USER: root
-       MYSQL_ROOT_PASSWORD: secret
-       MYSQL_DATABASE: superviz
+       MYSQL_ROOT_PASSWORD: root
      volumes:
       - ~/mysql:/var/lib/mysql
+     ports:
+       - "3306:3306"
 
   alpinephp:
     container_name: alpinephp
