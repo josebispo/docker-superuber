@@ -21,16 +21,16 @@ Essa imagem tem o peso médio de 333MB e inclui:
 Tanto o nginx, quanto o php-fpm rodam sob o usuário 'www', logo o diretório '/var/www/src' sempre será executado sob esse usuário (evitar ter que aplicar chmod especial em algum diretório para que o php possa operar).
 
 
-## Docker 
-- faça o docker login com a conta do dockerhub
-- docker login 
-- em seguida configure o arquivo docker-compose.yml apontando para a pasta do projeto
-- rode o comando docker-compose up -d
-- docker ps - para exibir os container 
-- para acessar dentro do container rode
-- docker exec -it {ID CONTAINER} /bin/sh  
-- o front ainda deve ser rodado fora do container provisioriamente.
+## Docker  SUPERVIZ
+- Faça o docker login com a sua conta do dockerhub
+- Focker login 
+- Em seguida configure o arquivo docker-compose.yml apontando para a pasta do projeto
+- Rode o comando docker-compose up -d
+- Docker ps - para exibir os container 
+- O front ainda deve ser rodado dentro do container e pasta do projeto.
 
+- Para acessar dentro do container rode
+- Docker exec -it {ID CONTAINER} /bin/sh  
 
 
 Mais dados no docker hub:
@@ -61,3 +61,5 @@ Caso queira fazer o build:
 ```
 docker build -t nomeDaSuaImagem -f Dockerfile .
 ```
+
+docker run --rm -v $(pwd):/src -w /src -p 8080:8080 node:6 bash -c "npm install && npm run dev"
