@@ -23,6 +23,7 @@ services:
      -  ../SuperViz-Web:/var/www/src
     ports:
       - "8180:80"
+      - "1990:1990"
 
   web:
     container_name: VueJS
