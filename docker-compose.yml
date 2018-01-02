@@ -13,7 +13,7 @@ services:
        - "3306:3306"
 
   alpinephp:
-    container_name: api
+    container_name: Api
     image: josebispo/superviz-218
     links:
       - mysql:mysql
@@ -21,12 +21,15 @@ services:
       TZ: America/Sao_Paulo
     volumes:
      -  ../SuperViz-Web:/var/www/src
+     -  ./config/nginx/default:/etc/nginx/sites-enabled/default
+     -  ./config/nginx/superviz_com.crt:/etc/ssl/certs/superviz_com.crt
+     -  ./config/nginx/superviz_com.key:/etc/ssl/private/superviz_com.key
     ports:
-      - "8180:80"
-      - "1990:1990"
+     - "80:443" #sites
+     - "1990:1990" #swagger
 
   web:
-    container_name: VueJS
+    container_name: Mobile
     image: josebispo/superviz-218
     environment:
         TZ: America/Sao_Paulo
@@ -35,7 +38,7 @@ services:
      -  ./vue-conf/nginx/nginx.conf:/etc/nginx/nginx.conf
      -  ./vue-conf/nginx/default:/etc/nginx/sites-enabled/default
     ports:
-     - "777:8080"
+     - "777:8080" #mobile
 
 volumes:
   redis:

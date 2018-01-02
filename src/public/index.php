@@ -1,1 +1,1 @@
-<?php echo phpinfo();
+<?php echo "here stay the site";

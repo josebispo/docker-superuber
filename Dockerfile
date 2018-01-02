@@ -81,6 +81,10 @@ COPY src/ /var/www/src/
 # Setting the workdir
 WORKDIR /var/www/src
 
+# Configure Nginx keys
+#COPY config/nginx/superviz_com.crt /etc/keys/superviz_com.crt
+#COPY config/nginx/superviz_com.key /etc/keys/superviz_com.key
+
 # Start Supervisord
 ADD config/start.sh /start.sh
 RUN chmod +x /start.sh

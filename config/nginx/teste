@@ -4,12 +4,11 @@ server {
 
     sendfile off;
 
-    root /var/www/src/api/public;
+    root /var/www/src/site;
     index index.php index.html;
 
-        listen              80 ssl;
         listen              443 ssl;
-        server_name         superviz.com
+        server_name        jailsonmendes texte.xt  teste.com www.teste.com;
         ssl_certificate     /etc/ssl/certs/superviz_com.crt;
         ssl_certificate_key /etc/ssl/private/superviz_com.key;
         ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
