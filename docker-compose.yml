@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   mysql:
@@ -12,8 +12,11 @@ services:
      ports:
        - "3306:3306"
 
-  alpinephp:
-    container_name: Api
+######################################
+# API Container
+######################################
+  api:
+    container_name: superviz-api
     image: josebispo/superviz-218
     links:
       - mysql:mysql
@@ -21,15 +24,18 @@ services:
       TZ: America/Sao_Paulo
     volumes:
      -  ../SuperViz-Web:/var/www/src
-     -  ./config/nginx/default:/etc/nginx/sites-enabled/default
-     -  ./config/nginx/superviz_com.crt:/etc/ssl/certs/superviz_com.crt
-     -  ./config/nginx/superviz_com.key:/etc/ssl/private/superviz_com.key
+     -  ./config/nginx/api:/etc/nginx/sites-enabled/default
+     -  ./config/nginx/keys/superviz_com.crt:/etc/ssl/certs/superviz_com.crt
+     -  ./config/nginx/keys/superviz_com.key:/etc/ssl/private/superviz_com.key
+    restart: unless-stopped
     ports:
-     - "80:443" #sites
-     - "1990:1990" #swagger
+     - "80" #sites
 
-  web:
-    container_name: Mobile
+######################################
+# Mobile Containers
+######################################
+  mobile:
+    container_name: superviz-mobile
     image: josebispo/superviz-218
     environment:
         TZ: America/Sao_Paulo
@@ -37,12 +43,20 @@ services:
      -  ../SuperViz-Web:/var/www/src
      -  ./vue-conf/nginx/nginx.conf:/etc/nginx/nginx.conf
      -  ./vue-conf/nginx/default:/etc/nginx/sites-enabled/default
+    restart: unless-stopped
     ports:
-     - "777:8080" #mobile
+     - "80:80" #mobile
 
-volumes:
-  redis:
-  yarn:
-  data:
-    driver: "local"
-
+######################################
+# NGINX
+######################################
+  nginx:
+     container_name: superviz-nginx
+     volumes:
+      -  ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+     build:
+       context: ./config/nginx/
+       dockerfile: ./Dockerfile
+     restart: unless-stopped
+     ports:
+       - 69:80

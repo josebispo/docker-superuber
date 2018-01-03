@@ -5,12 +5,12 @@ server {
     sendfile off;
 
     root /var/www/src/mobile/dist;
-    index index.php index.html;
+    index index.html;
 
     location / {
         # First attempt to serve request as file, then
         # as directory, then fall back to index.php
-        try_files $uri /index.php?q=$uri&$args;
+        try_files $uri /index.html;
         #try_files $uri $uri/ /index.php?q=$uri&$args;
     }
 

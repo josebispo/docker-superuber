@@ -1,23 +1,23 @@
 server {
 
     #listen 80 default_server;
+    #server_name  superviz.com localhost;
 
     sendfile off;
 
-    root /var/www/src/site;
+    root /var/www/src/api/public;
     index index.php index.html;
 
-        listen              443 ssl;
-        server_name        jailsonmendes texte.xt  teste.com www.teste.com;
-        ssl_certificate     /etc/ssl/certs/superviz_com.crt;
-        ssl_certificate_key /etc/ssl/private/superviz_com.key;
-        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-        ssl_ciphers         HIGH:!aNULL:!MD5;
+      #  listen              443 ssl;
+      #  ssl_certificate     /etc/ssl/certs/superviz_com.crt;
+      #  ssl_certificate_key /etc/ssl/private/superviz_com.key;
+      #  ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+      #  ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
         # First attempt to serve request as file, then
         # as directory, then fall back to index.php
-        try_files $uri  /index.php?q=$uri&$args;
+        try_files $uri /index.php?q=$uri&$args;
         #try_files $uri $uri/ /index.php?q=$uri&$args;
     }
 
