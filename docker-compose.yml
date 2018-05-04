@@ -2,7 +2,7 @@ version: '2'
 services:
 
   mysql:
-     container_name: mysql
+     container_name: mysql_homelist
      image: mysql
      environment:
        TZ: America/Sao_Paulo
@@ -10,19 +10,21 @@ services:
      volumes:
       - ~/mysql:/var/lib/mysql
      ports:
-       - "3306:3306"
+       - "3309:3306"
 
   alpinephp:
-    container_name: api
+    container_name: homelist_api
     image: josebispo/superviz-218
     links:
       - mysql:mysql
     environment:
       TZ: America/Sao_Paulo
     volumes:
-     -  ../SuperViz-Web:/var/www/src
+     -  ../homelist-laravel:/var/www/src
+     -  ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+     -  ./config/nginx/default:/etc/nginx/sites-enabled/default
     ports:
-      - "8180:80"
+      - "8181:80"
       - "1990:1990"
 
   web:
@@ -31,7 +33,7 @@ services:
     environment:
         TZ: America/Sao_Paulo
     volumes:
-     -  ../SuperViz-Web:/var/www/src
+     -  /Users/bispo/projects/homelist-laravel:/var/www/src
      -  ./vue-conf/nginx/nginx.conf:/etc/nginx/nginx.conf
      -  ./vue-conf/nginx/default:/etc/nginx/sites-enabled/default
     ports:
